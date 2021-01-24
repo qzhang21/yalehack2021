@@ -52,6 +52,7 @@ unique(trim_d$key) # all the same
 
 trim_d = d[-gdp_na_idxs,-c(32:37,46,47,49:51,57,58,60:66,68:71)]
 trim_d = trim_d[,-c(11,14,18,20:47)]
+trim_D = d[gdp_na_idxs,]
 attach(trim_d)
 summary(trim_d)
 # further trimming
@@ -62,3 +63,11 @@ summary(mobility_rar_na_idxs==which(is.na(mobility_transit_stations))) # all TRU
 summary(mobility_rar_na_idxs==which(is.na(mobility_workplaces))) # all TRUE
 summary(mobility_rar_na_idxs==which(is.na(mobility_residential))) # all TRUE
 trim_d_sub1 = trim_d[-mobility_rar_na_idxs,]
+
+summary(trim_d_sub1)
+dim(trim_d_sub1)
+
+write.csv(trim_d_sub1,"trimmed.csv",row.names=F)
+# testing
+test_d = read.csv("trimmed.csv",header=T)
+summary(test_d) # great
