@@ -63,12 +63,8 @@ summary(mobility_rar_na_idxs==which(is.na(mobility_transit_stations))) # all TRU
 summary(mobility_rar_na_idxs==which(is.na(mobility_workplaces))) # all TRUE
 summary(mobility_rar_na_idxs==which(is.na(mobility_residential))) # all TRUE
 trim_d_sub1 = trim_d[-mobility_rar_na_idxs,]
-# I tried to add these two lines but it was throwing an "object 'trim_d_subl' not found" error
-# attach(trim_d_subl)
-# summary(trim_d_subl)
+summary(trim_d_sub1)
 
-# GENERAL NOTE: I found a bunch of sketchy NA values but am still kinda confused as to how to cut them out 
-# I thought I needed to do something like "trim_d_pop = trim_d_subl[-pop_age_20_29_na_idxs]" but it wasn't working? 
 # Population trimming 
 # Example: if y <- c(1, 2, 3, NA), then is.na(y) will return (F F F T) 
 pop_age_20_29_na_idxs = which(is.na(population_age_20_29))
@@ -78,6 +74,10 @@ summary(pop_age_20_29_na_idxs == which(is.na(population_age_50_59))) # all TRUE
 summary(pop_age_20_29_na_idxs == which(is.na(population_age_60_69))) # all TRUE
 summary(pop_age_20_29_na_idxs == which(is.na(population_age_70_79))) # all TRUE
 summary(pop_age_20_29_na_idxs == which(is.na(population_age_80_and_older))) # all TRUE 
+# Because we found that age_30_39, age_40_49, etc. contain the same rows that are N/A as age_20_29, we can trim these rows
+# Also, since we're trimming rows (and keeping columns), and it's formatted (row, col), we do (-rows that we want to trim,)
+#trim_d_sub2 = trim_d[-pop_age_20_29_na_idxs,]
+
 
 # Weather/temperature trimming
 noaa_station_na_idxs = which(is.na(noaa_station))
@@ -104,6 +104,20 @@ summary(school_closing_na_idxs == which(is.na(international_support))) # all TRU
 summary(school_closing_na_idxs == which(is.na(public_information_campaigns))) # all TRUE
 summary(school_closing_na_idxs == which(is.na(testing_policy))) # all TRUE
 summary(school_closing_na_idxs == which(is.na(contact_tracing))) # all TRUE
+
+# Plotting total_deceased against variables
+plot(d$total_deceased~d$average_temperature)
+plot(d$total_deceased~d$school_closing)
+plot(d$total_deceased~d$workplace_closing)
+plot(d$total_deceased~d$cancel_public_events)
+plot(d$total_deceased~d$restrictions_on_gatherings)
+plot(d$total_deceased~d$stay_at_home_requirements)
+plot(d$total_deceased~d$restrictions_on_internal_movement)
+plot(d$total_deceased~d$international_travel_controls)
+plot(d$total_deceased~d$investment_in_vaccines)
+plot(d$total_deceased~d$emergency_investment_in_healthcare)
+plot(d$total_deceased~d$contact_tracing)
+
 
 
 
